@@ -75,14 +75,14 @@ class _RecordListViewState extends State<RecordListView> {
     AudioPlayer audioPlayer = AudioPlayer();
 
     if (!_isPlaying) {
-      audioPlayer.play(filePath, isLocal: true);
+      audioPlayer.play(UrlSource(filePath));
       setState(() {
         _selectedIndex = index;
         _completedPercentage = 0.0;
         _isPlaying = true;
       });
 
-      audioPlayer.onPlayerCompletion.listen((_) {
+      audioPlayer.onPlayerComplete.listen((_) {
         setState(() {
           _isPlaying = false;
           _completedPercentage = 0.0;
@@ -94,7 +94,7 @@ class _RecordListViewState extends State<RecordListView> {
         });
       });
 
-      audioPlayer.onAudioPositionChanged.listen((duration) {
+      audioPlayer.onPositionChanged.listen((duration) {
         setState(() {
           _currentDuration = duration.inMicroseconds;
           _completedPercentage =
